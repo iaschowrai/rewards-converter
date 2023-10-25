@@ -17,6 +17,7 @@ public class RewardsConverter {
         try {
             // Try to parse the input string as a double
             cashValue = Double.parseDouble(input_value);
+
         } catch (NumberFormatException exception) {
             // If parsing fails, display an error message and exit the program
             System.out.println("Could not parse input value as a double, exiting");
@@ -28,10 +29,6 @@ public class RewardsConverter {
 
         // Create a RewardValue object with the cashValue
         var rewardsValue = new RewardValue(cashValue);
-
-        // Display the result, showing the cash equivalent
-        System.out.println("$"+ input_value +" is worth " + rewardsValue.getCashValue() + " Rupees Cash");
-
 
         // Display the result, showing the miles equivalent
         System.out.println("$" + input_value + " is worth " + rewardsValue.getMilesValue() + " miles");
@@ -45,17 +42,22 @@ class RewardValue {
     public RewardValue(double cashValue) {
         this.cashValue = cashValue;
     }
-    // Method to calculate the equivalent miles based on a simple conversion rate
-    public double getCashValue() {
-        // You can customize this conversion rate as needed
-        double conversionRate = 84; // 1 dollar = 84 Rupees (just an example)
-        return cashValue * conversionRate;
+    // Constructor that takes miles as a parameter
+    public RewardValue(double miles, boolean isMiles) {
+        if (isMiles) {
+            this.cashValue = miles * 0.0035;
+        } else {
+            this.cashValue = miles;
+        }
     }
 
-    // Method to calculate the equivalent miles based on a simple conversion rate
+    // Method to calculate the equivalent cash based on the conversion rate
+    public double getCashValue() {
+        return cashValue;
+    }
+
+    // Method to calculate the equivalent miles based on the conversion rate
     public double getMilesValue() {
-        // You can customize this conversion rate as needed
-        double conversionRate = 1.5; // 1 dollar = 1.5 miles (just an example)
-        return cashValue * conversionRate;
+        return cashValue / 0.0035;
     }
 }
